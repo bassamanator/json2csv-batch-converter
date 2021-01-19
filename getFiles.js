@@ -13,10 +13,8 @@ const getFiles = async (directory, extension) => {
 	}
 	return files.filter(
 		file =>
-			file.substr(
-				file.length - extension.length,
-				extension.length
-			) === extension
+			file.substr(file.length - extension.length, extension.length) ===
+			extension
 	);
 };
 

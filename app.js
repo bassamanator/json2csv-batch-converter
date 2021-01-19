@@ -1,37 +1,30 @@
 const fs = require('fs');
 const path = require('path');
 const dir = '/path/';
-const toChangeExtension = 'txt';
-const newExtension = 'csv';
-const {getFiles}=require('./getFiles.js');
+// const newExtension = 'csv';
+const { getFiles } = require('./getFiles.js');
 
 const logsDir = path.join(__dirname, 'logs');
 const { parse } = require('json2csv');
 
-
-
-const start = async testRun => {
+const start = async (testRun, toChangeExtension, newExtension) => {
 	if (!fs.existsSync(logsDir)) {
 		console.log('Directory "logs" not found.');
 		return;
 	}
 	let files;
 	try {
-		files = await getFiles(logsDir,toChangeExtension);
+		files = await getFiles(logsDir, toChangeExtension, newExtension);
 	} catch (err) {}
 	if (files.length === 0) {
 		console.log(`No ${toChangeExtension} files found.`);
 		return;
 	}
-
-	console.log('**Files: ', files);
-
+	let count=0;
 	files.forEach(file => {
 		const fullSource = path.join(logsDir, file);
 		const newFile = file.replace('.' + toChangeExtension, '.' + newExtension);
 		const fullDest = path.join(logsDir, newFile);
-		console.log(fullSource);
-		console.log(fullDest);
 
 		let csvData;
 		try {
@@ -46,6 +39,7 @@ const start = async testRun => {
 			console.error(err);
 		}
 	});
+	console.log(`Files converted: ${count}`)
 };
 
-start(true);
+start(true, 'txt', 'csv');
