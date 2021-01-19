@@ -3,28 +3,12 @@ const path = require('path');
 const dir = '/path/';
 const toChangeExtension = 'txt';
 const newExtension = 'csv';
-const util = require('util');
-
-const readdir = util.promisify(fs.readdir);
+const {getFiles}=require('./getFiles.js');
 
 const logsDir = path.join(__dirname, 'logs');
 const { parse } = require('json2csv');
 
-const getFiles = async (directory, extension) => {
-	let files;
-	try {
-		files = await readdir(directory);
-	} catch (err) {
-		console.log(err);
-	}
-	return files.filter(
-		file =>
-			file.substr(
-				file.length - extension.length,
-				extension.length
-			) === extension
-	);
-};
+
 
 const start = async testRun => {
 	if (!fs.existsSync(logsDir)) {
