@@ -1,0 +1,5 @@
+"ParticipantID","TrialType","TrialDuration","TrialNumber","PracticeTrial","FractalId","RandomTarget1","RandomTarget2","TargetId","Clicks","BlocksRevealed","WindowResized"
+"ef55b083-e4a9-4927-b618-8bab65b360c4",1,20000,1,1,14,41,38,41,72,0,1
+"ef55b083-e4a9-4927-b618-8bab65b360c4",1,20000,2,1,4,49,53,49,51,9,1
+"ef55b083-e4a9-4927-b618-8bab65b360c4",1,20000,3,0,10,6,32,6,64,1,1
+"ef55b083-e4a9-4927-b618-8bab65b360c4",1,20000,4,0,22,37,9,37,36,26,1

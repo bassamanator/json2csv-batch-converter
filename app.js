@@ -7,11 +7,12 @@ const util = require('util');
 
 const readdir = util.promisify(fs.readdir);
 
-const logsDir = '/path/logs';
+const logsDir = path.join(__dirname, 'logs');
 const { parse } = require('json2csv');
 
-const getJsonFiles = async () => {
+const getJsonFiles = async testRun => {
 	let files;
+
 	try {
 		files = await readdir(logsDir);
 		// console.log(files); // This prints the filenames
@@ -27,8 +28,14 @@ const getJsonFiles = async () => {
 	);
 };
 
-const start = async () => {
+const start = async testRun => {
+	if (!fs.existsSync(dir)) {
+		console.log('Directory "logs" not found.');
+		return;
+	}
+
 	let files;
+	if(!files) return;
 	try {
 		files = await getJsonFiles();
 	} catch (err) {}
@@ -50,11 +57,11 @@ const start = async () => {
 		try {
 			const fileContents = JSON.parse(fs.readFileSync(fullSource, 'utf8'));
 			csvData = parse(fileContents, {});
-			fs.writeFileSync(fullDest, csvData);
+			if (!testRun) fs.writeFileSync(fullDest, csvData);
 		} catch (err) {
 			console.error(err);
 		}
 	});
 };
 
-start();
+start(true);

@@ -1,0 +1,5 @@
+"ParticipantID","TrialType","TrialDuration","TrialNumber","PracticeTrial","FractalId","RandomTarget1","RandomTarget2","TargetId","Clicks"
+"8c15fd65-20b1-e35b-28b9-3198718733aa",1,5000,1,1,6,5,1,5,6
+"8c15fd65-20b1-e35b-28b9-3198718733aa",1,5000,2,1,7,9,3,9,22
+"8c15fd65-20b1-e35b-28b9-3198718733aa",1,5000,3,0,3,4,2,4,19
+"8c15fd65-20b1-e35b-28b9-3198718733aa",1,5000,4,0,8,7,8,7,19
