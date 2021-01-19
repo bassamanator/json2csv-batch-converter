@@ -1,13 +1,13 @@
 const fs = require('fs');
 const path = require('path');
-const dir = '/home/bassam/fractal-task/fractal-task-v2/www/imgs/';
+const dir = '/path/';
 const toChangeExtension = 'txt';
 const newExtension = 'csv';
 const util = require('util');
 
 const readdir = util.promisify(fs.readdir);
 
-const logsDir = '/home/bassam/fractal-task/batch-json2csv/logs';
+const logsDir = '/path/logs';
 const { parse } = require('json2csv');
 
 const getJsonFiles = async () => {
@@ -58,17 +58,3 @@ const start = async () => {
 };
 
 start();
-//
-// const myData = fs.readFileSync(myFile, 'utf8');
-// // console.log(myData); // This displays file contents correctly.
-//
-// const { Parser } = require('json2csv');
-//
-// try {
-// 	const parser = new Parser({});
-// 	const csv = parser.parse(JSON.parse(myData));
-// 	console.log(csv);
-// 	fs.writeFileSync(myFile2, csv, 'utf8');
-// } catch (err) {
-// 	console.error(err);
-// }
