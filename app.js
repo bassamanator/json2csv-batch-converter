@@ -10,37 +10,33 @@ const readdir = util.promisify(fs.readdir);
 const logsDir = path.join(__dirname, 'logs');
 const { parse } = require('json2csv');
 
-const getJsonFiles = async testRun => {
+const getFiles = async (directory, extension) => {
 	let files;
-
 	try {
-		files = await readdir(logsDir);
-		// console.log(files); // This prints the filenames
+		files = await readdir(directory);
 	} catch (err) {
 		console.log(err);
 	}
 	return files.filter(
 		file =>
 			file.substr(
-				file.length - toChangeExtension.length,
-				toChangeExtension.length
-			) === toChangeExtension
+				file.length - extension.length,
+				extension.length
+			) === extension
 	);
 };
 
 const start = async testRun => {
-	if (!fs.existsSync(dir)) {
+	if (!fs.existsSync(logsDir)) {
 		console.log('Directory "logs" not found.');
 		return;
 	}
-
 	let files;
-	if(!files) return;
 	try {
-		files = await getJsonFiles();
+		files = await getFiles(logsDir,toChangeExtension);
 	} catch (err) {}
 	if (files.length === 0) {
-		console.log('No files to convert.');
+		console.log(`No ${toChangeExtension} files found.`);
 		return;
 	}
 
@@ -58,6 +54,10 @@ const start = async testRun => {
 			const fileContents = JSON.parse(fs.readFileSync(fullSource, 'utf8'));
 			csvData = parse(fileContents, {});
 			if (!testRun) fs.writeFileSync(fullDest, csvData);
+			else {
+				console.log(fullSource);
+				console.log(fullDest);
+			}
 		} catch (err) {
 			console.error(err);
 		}
