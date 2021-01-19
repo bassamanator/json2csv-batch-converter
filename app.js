@@ -1,20 +1,26 @@
+/*
+ * Author: Bassam Husain
+ * Batch conver json files to csv files using the
+ * json2csv package https://www.npmjs.com/package/json2csv
+ * Place all .json files in json/ and run.
+ */
+ 
 const fs = require('fs');
 const path = require('path');
 const dir = '/path/';
-// const newExtension = 'csv';
+
 const { getFiles } = require('./getFiles.js');
 const { convertToCsv } = require('./convertToCsv.js');
-
-const logsDir = path.join(__dirname, 'logs');
+const targetDirectory = path.join(__dirname, 'json');
 
 const start = async (testRun, toChangeExtension, newExtension) => {
-	if (!fs.existsSync(logsDir)) {
-		console.log('Directory "logs" not found.');
+	if (!fs.existsSync(targetDirectory)) {
+		console.log(`Directory ${targetDirectory} not found.`);
 		return;
 	}
 	let files;
 	try {
-		files = await getFiles(logsDir, toChangeExtension, newExtension);
+		files = await getFiles(targetDirectory, toChangeExtension, newExtension);
 	} catch (err) {}
 	if (files.length === 0) {
 		console.log(`No ${toChangeExtension} files found.`);
@@ -22,20 +28,20 @@ const start = async (testRun, toChangeExtension, newExtension) => {
 	}
 	let count = 0;
 	files.forEach(file => {
-		const fullSource = path.join(logsDir, file);
+		const fullSource = path.join(targetDirectory, file);
 		const newFile = file.replace('.' + toChangeExtension, '.' + newExtension);
-		const fullDest = path.join(logsDir, newFile);
+		const fullDest = path.join(targetDirectory, newFile);
 
 		let csvData;
 		try {
 			const fileContents = JSON.parse(fs.readFileSync(fullSource, 'utf8'));
 			csvData = convertToCsv(fileContents, {});
-			console.log(csvData);
-			if (!testRun) fs.writeFileSync(fullDest, csvData);
-			else {
-				console.log(fullSource);
-				console.log(fullDest);
+			if (!testRun) {
+				fs.writeFileSync(fullDest, csvData);
+				count++;
 			}
+
+			console.log(fullSource, fullDest);
 		} catch (err) {
 			console.error(err);
 		}
@@ -43,4 +49,4 @@ const start = async (testRun, toChangeExtension, newExtension) => {
 	console.log(`Files converted: ${count}`);
 };
 
-start(true, 'txt', 'csv');
+start(false, 'json', 'csv');
